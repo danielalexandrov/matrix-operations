@@ -43,13 +43,30 @@ matrix sum_matrices(matrix *m, matrix *n) {
   return result;
 }
 
+matrix subtract_matrices(matrix *m, matrix *n) {
+  matrix result = create_matrix(m->row_count, m->col_count);
+  if (m->row_count != n->row_count && m->col_count != n->col_count) {
+    printf("Cannot subtract matrices due to unequal dimensions\n");
+    return result;
+  }
+
+  for (int i = 0; i < m->row_count; i++) {
+    for (int j = 0; j < m->col_count; j++) {
+      double difference =
+          element_at_ij(m, i + 1, j + 1) - element_at_ij(n, i + 1, j + 1);
+      set_element_at_ij(&result, i + 1, j + 1, difference);
+    }
+  }
+  return result;
+}
+
 // TODO add subtract_matrices
 
 matrix multiply_matrices(matrix *m, matrix *n) {
   matrix result = create_matrix(m->row_count, n->col_count);
   if (m->col_count != n->row_count) {
-    perror("The column count of matrix m does not equal the row count of "
-           "matrix n");
+    printf("The column count of matrix m does not equal the row count of "
+           "matrix n\n");
     return result;
   }
 
@@ -70,7 +87,7 @@ matrix multiply_matrices(matrix *m, matrix *n) {
 double determinant(matrix *m) {
   double result = 0;
   if (m->row_count != m->col_count) {
-    perror("This matrix is not square. Determinant cannot be computed.");
+    printf("This matrix is not square. Determinant cannot be computed\n.");
     return 0;
   }
 
