@@ -24,6 +24,22 @@ void set_element_at_ij(matrix *m, int i, int j, double element) {
                // mathematical indeces
 }
 
+matrix sum_matrices(matrix *m, matrix *n) {
+  matrix result = create_matrix(m->row_count, m->col_count);
+  if (m->row_count != n->row_count && m->col_count != n->row_count) {
+    perror("Cannot add matrices due to unequal dimensions");
+    return result;
+  }
+
+  for (int i = 0; i < m->row_count; i++) {
+    for (int j = 0; j < m->col_count; j++) {
+      double sum = element_at_ij(m, i, j) + element_at_ij(n, i, j);
+      set_element_at_ij(&result, i, j, sum);
+    }
+  }
+  return result;
+}
+
 matrix multiply_matrices(matrix *m, matrix *n) {
   matrix result = create_matrix(m->row_count, n->col_count);
   if (m->col_count != n->row_count) {
