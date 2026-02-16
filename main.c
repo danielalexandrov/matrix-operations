@@ -1,28 +1,32 @@
-#include <climits>
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef struct {
   int row_count;
   int col_count;
-  double *contents;
+  double *data;
 } matrix;
+
+typedef struct {
+  int row_count;
+  double *data;
+} vector;
 
 matrix create_matrix(int rows, int cols) {
   matrix m = {rows, cols, malloc(rows * cols * sizeof(double))};
   return m;
 }
 
-void delete_matrix(matrix *m) { free(m->contents); }
+void delete_matrix(matrix *m) { free(m->data); }
 
 double element_at_ij(matrix *m, int i, int j) {
-  return m->contents[(i - 1) * m->col_count +
-                     (j - 1)]; // subtract 1 from each index to ensure indeces
-                               // match mathematical indeces
+  return m->data[(i - 1) * m->col_count +
+                 (j - 1)]; // subtract 1 from each index to ensure indeces
+                           // match mathematical indeces
 }
 
 void set_element_at_ij(matrix *m, int i, int j, double element) {
-  m->contents[(i - 1) * m->col_count + (j - 1)] =
+  m->data[(i - 1) * m->col_count + (j - 1)] =
       element; // subtract 1 from each index to ensure indeces match
                // mathematical indeces
 }
@@ -102,7 +106,6 @@ double determinant(matrix *m) {
     result = element_at_ij(m, 1, 1) * element_at_ij(m, 2, 2) -
              element_at_ij(m, 1, 2) * element_at_ij(m, 2, 1);
   }
-  // TODO add determinant calculation for 3x3 and higher order matrices
   return result;
 }
 
