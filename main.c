@@ -1,3 +1,4 @@
+#include <climits>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -60,8 +61,6 @@ matrix subtract_matrices(matrix *m, matrix *n) {
   return result;
 }
 
-// TODO add subtract_matrices
-
 matrix multiply_matrices(matrix *m, matrix *n) {
   matrix result = create_matrix(m->row_count, n->col_count);
   if (m->col_count != n->row_count) {
@@ -82,6 +81,14 @@ matrix multiply_matrices(matrix *m, matrix *n) {
   }
 
   return result;
+}
+
+void scale_matrix(matrix *m, int scalar) {
+  for (int i = 0; i < m->row_count; i++) {
+    for (int j = 0; j < m->col_count; j++) {
+      set_element_at_ij(m, i, j, scalar);
+    }
+  }
 }
 
 double determinant(matrix *m) {
